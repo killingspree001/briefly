@@ -1,12 +1,18 @@
 RewriteEngine On
 
+# Allow access to the public directory for assets
+RewriteCond %{REQUEST_URI} ^/public/ [OR]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
 # Route /api/summarize to the python script
 RewriteRule ^api/summarize$ api/summarize.py [L]
 
 # Route /archive to archive.php
 RewriteRule ^archive$ api/archive.php [L]
 
-# Route everything else to index.php if it's not a real file
+# Route everything else (including root) to api/index.php
+RewriteRule ^$ api/index.php [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ api/index.php [L]
