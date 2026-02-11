@@ -1,0 +1,19 @@
+# ─── Secrets ──────────────────────
+.env
+
+# ─── Dependencies ─────────────────
+vendor/
+node_modules/
+__pycache__/
+*.pyc
+
+# ─── IDE / OS ─────────────────────
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ─── Temp / Screenshots ──────────
+screenshots/
+screenshots_full/
+*.mp4

@@ -1,0 +1,50 @@
+{
+    "functions": {
+        "api/*.php": {
+            "runtime": "vercel-php@0.6.0"
+        },
+        "api/*.py": {
+            "runtime": "@vercel/python"
+        }
+    },
+    "crons": [
+        {
+            "path": "/api/cron",
+            "schedule": "0 * * * *"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/summarize",
+            "dest": "/api/summarize.py"
+        },
+        {
+            "src": "/api/articles",
+            "dest": "/api/articles.php"
+        },
+        {
+            "src": "/api/fetch",
+            "dest": "/api/fetch.php"
+        },
+        {
+            "src": "/api/process",
+            "dest": "/api/process.php"
+        },
+        {
+            "src": "/api/cron",
+            "dest": "/api/cron.php"
+        },
+        {
+            "src": "/api/pdf",
+            "dest": "/api/pdf.php"
+        },
+        {
+            "src": "/archive",
+            "dest": "/api/archive.php"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ]
+}
