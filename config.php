@@ -70,6 +70,8 @@ function getDB(): PDO {
     if ($pdo === null) {
         $host = DB_HOST;
         $port = 3306;
+        
+        // Handle "host:port" format
         if (strpos($host, ':') !== false) {
             [$host, $port] = explode(':', $host, 2);
         }
@@ -80,16 +82,26 @@ function getDB(): PDO {
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES " . DB_CHARSET
         ];
 
         // TiDB Serverless requires SSL (Secure Transport)
         if (strpos(DB_HOST, 'tidbcloud.com') !== false) {
             $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
-            // Force SSL mode for older PHP/MySQL drivers
+            // Force SSL mode
             $options[PDO::MYSQL_ATTR_SSL_CA] = true; 
         }
 
-        $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+        try {
+            $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+        } catch (PDOException $e) {
+            // Re-throw with clear debug info (host/user/db) but NO password
+            $debugMsg = sprintf(
+                "DB Connection Failed: Host=%s, Port=%s, User=%s, DB=%s. Error: %s",
+                $host, $port, DB_USER, DB_NAME, $e->getMessage()
+            );
+            throw new PDOException($debugMsg, (int)$e->getCode());
+        }
     }
     return $pdo;
 }
