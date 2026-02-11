@@ -68,7 +68,13 @@ define('CATEGORY_LABELS', [
 function getDB(): PDO {
     static $pdo = null;
     if ($pdo === null) {
-        $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET;
+        $host = DB_HOST;
+        $port = 3306;
+        if (strpos($host, ':') !== false) {
+            [$host, $port] = explode(':', $host, 2);
+        }
+
+        $dsn = "mysql:host={$host};port={$port};dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
         
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

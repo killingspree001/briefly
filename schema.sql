@@ -1,6 +1,9 @@
 -- Briefly.ai - Database Schema
 -- ===============================
 
+-- Use the default TiDB Serverless database
+USE `test`;
+
 -- Articles Table
 CREATE TABLE IF NOT EXISTS `articles` (
     `id`                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -25,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `articles` (
 -- Fetch Log Table
 CREATE TABLE IF NOT EXISTS `fetch_log` (
     `id`                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `status`            VARCHAR(20)   NOT NULL, -- 'success', 'error'
+    `status`            VARCHAR(20)   NOT NULL,
     `articles_fetched`  INT           DEFAULT 0,
     `error_message`     TEXT          DEFAULT NULL,
     `created_at`        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
