@@ -2,10 +2,10 @@
     "version": 2,
     "functions": {
         "api/*.php": {
-            "runtime": "@vercel/php@0.6.0"
+            "runtime": "vercel-php@0.6.0"
         },
         "api/*.py": {
-            "runtime": "@vercel/python@3.9"
+            "runtime": "@vercel/python"
         }
     },
     "crons": [
