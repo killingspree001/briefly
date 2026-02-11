@@ -79,6 +79,8 @@ function getDB(): PDO {
         // TiDB Serverless requires SSL (Secure Transport)
         if (strpos(DB_HOST, 'tidbcloud.com') !== false) {
             $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
+            // Force SSL mode for older PHP/MySQL drivers
+            $options[PDO::MYSQL_ATTR_SSL_CA] = true; 
         }
 
         $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
