@@ -40,7 +40,7 @@
             "dest": "/api/pdf.php"
         },
         {
-            "archive": "/archive",
+            "src": "/archive",
             "dest": "/api/archive.php"
         },
         {
