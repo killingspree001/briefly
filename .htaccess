@@ -4,24 +4,29 @@ RewriteEngine On
 DirectoryIndex api/index.php
 
 # Allow access to the public directory for assets
-RewriteCond %{REQUEST_URI} ^/public/ [OR]
+RewriteCond %{REQUEST_URI} ^/public/
+RewriteRule ^ - [L]
+
+# Allow access to existing files directly (like api/articles.php)
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule ^ - [L]
 
-# Route /api/summarize to the python script
+# Route /api/* to the correct PHP files (without .php extension)
 RewriteRule ^api/summarize$ api/summarize.py [L]
+RewriteRule ^api/articles$ api/articles.php [L]
+RewriteRule ^api/fetch$ api/fetch.php [L]
+RewriteRule ^api/process$ api/process.php [L]
+RewriteRule ^api/cron$ api/cron.php [L]
+RewriteRule ^api/pdf$ api/pdf.php [L]
 
-# Route /archive to archive.php
+# Route /archive and /seed to their scripts
 RewriteRule ^archive$ api/archive.php [L]
-
-# Route /seed to seed_client_demo.php
 RewriteRule ^seed$ seed_client_demo.php [L]
 
-# Route everything else (including root) to api/index.php
+# Route root URL to api/index.php
 RewriteRule ^$ api/index.php [L]
+
+# Everything else that doesn't exist, send to api/index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ api/index.php [L]
-
-# Fallback for servers that support it
-FallbackResource /api/index.php

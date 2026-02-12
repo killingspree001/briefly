@@ -174,32 +174,64 @@ $stories = [
     ]
 ];
 
-echo "Briefly.ai - Seeding demo stories...\n";
-$stmt = $db->prepare("INSERT INTO articles 
-    (title, ai_summary, original_url, category, sentiment, sentiment_score, fetched_at, is_processed, read_time_sec)
-    VALUES (:title, :ai_summary, :url, :cat, :sent, :score, :date, 1, :read)");
+// First, clear all existing articles to prevent duplicates
+$db->exec("DELETE FROM articles");
+echo "Cleared old articles.\n";
 
-foreach ($stories as $s) {
+$stmt = $db->prepare("INSERT INTO articles 
+    (title, ai_summary, original_url, source_name, category, sentiment, sentiment_score, fetched_at, is_processed, read_time_sec)
+    VALUES (:title, :ai_summary, :url, :source, :cat, :sent, :score, :date, 1, :read)");
+
+$sources = [
+    'Tech' => ['TechCrunch', 'The Verge', 'Wired', 'Ars Technica', 'CNBC'],
+    'Finance' => ['Bloomberg', 'Reuters', 'Financial Times', 'WSJ', 'Forbes'],
+    'Science' => ['Nature', 'Science Daily', 'New Scientist', 'Phys.org', 'MIT Technology Review']
+];
+
+foreach ($stories as $i => $s) {
+    $catSources = $sources[$s['cat']] ?? ['Reuters'];
+    $source = $catSources[array_rand($catSources)];
+    
     $stmt->execute([
         ':title' => $s['title'],
         ':ai_summary' => $s['desc'],
         ':url' => $s['url'],
+        ':source' => $source,
         ':cat' => $s['cat'],
         ':sent' => $s['sentiment'],
         ':score' => $s['score'],
         ':date' => $s['date'],
-        ':read' => rand(45, 95)
+        ':read' => rand(45, 120)
     ]);
     echo "Inserted: " . $s['title'] . "\n";
 }
 
-echo "\nDone! Client demo news is now in the database.\n";
+echo "\nDone! " . count($stories) . " stories seeded into the database.\n";
 
-// Add a success log so "Updated Never" goes away
-$db->exec("INSERT INTO fetch_log (category, status, articles_found, run_at) VALUES ('all', 'success', 17, NOW())");
+// Add a success log so "Updated Never" goes away (without category column to be safe)
+try {
+    $db->exec("INSERT INTO fetch_log (status, articles_found, run_at) VALUES ('success', " . count($stories) . ", NOW())");
+} catch (Exception $e) {
+    // If that fails too, try with category
+    try {
+        $db->exec("INSERT INTO fetch_log (category, status, articles_found, run_at) VALUES ('all', 'success', " . count($stories) . ", NOW())");
+    } catch (Exception $e2) {
+        echo "Note: Could not update fetch_log: " . $e2->getMessage() . "\n";
+    }
+}
 
-// Finish with a nice HTML message since the user is visiting this via browser
-echo "<div style='font-family: sans-serif; padding: 40px; text-align: center;'>";
-echo "<h1 style='color: #10B981;'>Success! Demo News Seeded.</h1>";
-echo "<p>Go back to your <a href='/'>Homepage</a> to see the result.</p>";
-echo "</div>";
+// Show a nice HTML success page
+header('Content-Type: text/html; charset=utf-8');
+?>
+<!DOCTYPE html>
+<html>
+<head><title>Seed Complete</title></head>
+<body style="font-family: 'Inter', sans-serif; background: #0F172A; color: #E2E8F0; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;">
+    <div style="text-align: center; padding: 40px;">
+        <div style="font-size: 64px; margin-bottom: 20px;">✅</div>
+        <h1 style="color: #10B981; font-size: 2rem; margin-bottom: 10px;"><?= count($stories) ?> Stories Seeded!</h1>
+        <p style="color: #94A3B8; margin-bottom: 30px;">Your demo data is ready. Go check it out.</p>
+        <a href="/" style="display: inline-block; background: #10B981; color: white; padding: 14px 34px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.1rem;">Go to Homepage →</a>
+    </div>
+</body>
+</html>
