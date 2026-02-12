@@ -388,6 +388,7 @@ code {
     color: var(--text-bright);
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -399,6 +400,7 @@ code {
     color: var(--text-secondary);
     display: -webkit-box;
     -webkit-line-clamp: 4;
+    line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     flex: 1;
@@ -965,27 +967,98 @@ code {
     justify-content: center;
     background: var(--accent);
     color: white;
-    padding: 12px 28px;
+    padding: 14px 34px;
     border-radius: var(--radius-pill);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.05rem;
     transition: var(--transition);
-    box-shadow: 0 4px 15px var(--accent-glow);
-    margin-top: 10px;
+    box-shadow: 0 10px 25px var(--accent-glow);
+    margin: 20px 0;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.fetch-now-btn__icon {
+    width: 24px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fetch-now-btn__icon svg {
+    width: 14px;
+    height: 14px;
 }
 
 .fetch-now-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px var(--accent-glow);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 35px var(--accent-glow);
     background: #0ea271;
 }
 
 .fetch-now-btn:active {
-    transform: translateY(0);
+    transform: translateY(-2px);
 }
 
-.empty-state__archive-hint {
-    margin-top: 24px;
-    font-size: 0.88rem !important;
+.empty-state__footer {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+}
+
+.text-link {
+    color: var(--accent);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.text-link:hover {
+    text-decoration: underline;
     opacity: 0.8;
+}
+
+/* More Mobile Fixes */
+@media (max-width: 640px) {
+    .filter-bar__pills {
+        gap: 6px;
+        margin-bottom: 4px;
+    }
+
+    .filter-bar__meta {
+        justify-content: flex-start;
+        width: 100%;
+        padding: 10px 0;
+        border-top: 1px solid var(--border);
+        margin-top: 4px;
+    }
+
+    .pill {
+        padding: 8px 16px;
+        font-size: 0.78rem;
+    }
+
+    .empty-state {
+        padding: 60px 24px;
+    }
+
+    .empty-state h2 {
+        font-size: 1.25rem;
+    }
+
+    .empty-state p {
+        font-size: 0.88rem;
+    }
+
+    .fetch-now-btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
 }

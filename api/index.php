@@ -155,17 +155,20 @@ function sentimentIcon(string $sentiment): string {
                             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                         </svg>
                     </div>
-                    <h2>No stories yet</h2>
-                    <p>Click the button below to fetch and summarize today's news headlines.</p>
+                    <h2>Intelligence Stream Offline</h2>
+                    <p>Briefly.ai is ready to go. Click the button below to synchronize the latest global intelligence briefs.</p>
                     
                     <a href="/api/cron" class="fetch-now-btn" id="fetch-trigger">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;margin-right:8px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                        Fetch Today's News
+                        <div class="fetch-now-btn__icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        </div>
+                        <span>Fetch Today's Briefing</span>
                     </a>
 
-                    <p class="empty-state__archive-hint">
-                        Check the <a href="/archive">Archive <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;vertical-align:middle;margin-left:2px;"><line x1="1" y1="8" x2="15" y2="8"/><polyline points="8 1 15 8 8 15"/></svg></a> for yesterday's news.
-                    </p>
+                    <div class="empty-state__footer">
+                        <p>Prefer to see historic data?</p>
+                        <a href="/archive" class="text-link">Browse Archives →</a>
+                    </div>
                 </div>
             <?php else: ?>
                 <?php foreach ($articles as $article): ?>

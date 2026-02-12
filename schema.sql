@@ -1,11 +1,11 @@
--- Briefly.ai - Database Schema
--- ===============================
-
--- Use the default TiDB Serverless database
 USE `test`;
 
--- Articles Table
-CREATE TABLE IF NOT EXISTS `articles` (
+-- Delete existing tables to start fresh and fix the columns
+DROP TABLE IF EXISTS `articles`;
+DROP TABLE IF EXISTS `fetch_log`;
+
+-- Articles Table (Matches exactly what index.php, fetch.php, and archive.php use)
+CREATE TABLE `articles` (
     `id`                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `title`             VARCHAR(500)  NOT NULL,
     `original_url`      TEXT          NOT NULL,
@@ -23,13 +23,14 @@ CREATE TABLE IF NOT EXISTS `articles` (
     INDEX `idx_category` (`category`),
     INDEX `idx_fetched_at` (`fetched_at`),
     INDEX `idx_is_processed` (`is_processed`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Fetch Log Table
-CREATE TABLE IF NOT EXISTS `fetch_log` (
+-- Fetch Log Table (Matches exactly what index.php and fetch.php use)
+CREATE TABLE `fetch_log` (
     `id`                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `status`            VARCHAR(20)   NOT NULL,
-    `articles_fetched`  INT           DEFAULT 0,
+    `category`          VARCHAR(100)  DEFAULT NULL,
+    `status`            VARCHAR(20)   NOT NULL, -- 'success', 'error'
+    `articles_found`    INT           DEFAULT 0,
     `error_message`     TEXT          DEFAULT NULL,
-    `created_at`        TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `run_at`            TIMESTAMP     DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

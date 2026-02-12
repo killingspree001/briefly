@@ -14,6 +14,9 @@ RewriteRule ^api/summarize$ api/summarize.py [L]
 # Route /archive to archive.php
 RewriteRule ^archive$ api/archive.php [L]
 
+# Route /seed to seed_client_demo.php
+RewriteRule ^seed$ seed_client_demo.php [L]
+
 # Route everything else (including root) to api/index.php
 RewriteRule ^$ api/index.php [L]
 RewriteCond %{REQUEST_FILENAME} !-f
