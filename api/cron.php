@@ -18,9 +18,14 @@ header('Content-Type: application/json');
 $results = [];
 
 // Detect base URL
-$baseUrl = getenv('VERCEL_URL')
-    ? 'https://' . getenv('VERCEL_URL')
-    : 'http://localhost:8000';
+if (getenv('VERCEL_URL')) {
+    $baseUrl = 'https://' . getenv('VERCEL_URL');
+} elseif (isset($_SERVER['HTTP_HOST'])) {
+    $proto = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+    $baseUrl = "{$proto}://{$_SERVER['HTTP_HOST']}";
+} else {
+    $baseUrl = 'http://localhost:8000';
+}
 
 // Step 1: Fetch news
 $ch = curl_init("{$baseUrl}/api/fetch");

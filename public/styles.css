@@ -957,3 +957,35 @@ code {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--border-light);
 }
+
+/* ─── Fetch Now Button ───────────────────────────────────────────── */
+.fetch-now-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: white;
+    padding: 12px 28px;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 1rem;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px var(--accent-glow);
+    margin-top: 10px;
+}
+
+.fetch-now-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--accent-glow);
+    background: #0ea271;
+}
+
+.fetch-now-btn:active {
+    transform: translateY(0);
+}
+
+.empty-state__archive-hint {
+    margin-top: 24px;
+    font-size: 0.88rem !important;
+    opacity: 0.8;
+}

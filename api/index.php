@@ -156,7 +156,13 @@ function sentimentIcon(string $sentiment): string {
                         </svg>
                     </div>
                     <h2>No stories yet</h2>
-                    <p>Run <code>php seed_demo.php</code> to load demo data, or <code>php api/cron.php</code> to fetch live news.</p>
+                    <p>Click the button below to fetch and summarize today's news headlines.</p>
+                    
+                    <a href="/api/cron" class="fetch-now-btn" id="fetch-trigger">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;margin-right:8px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        Fetch Today's News
+                    </a>
+
                     <p class="empty-state__archive-hint">
                         Check the <a href="/archive">Archive <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;vertical-align:middle;margin-left:2px;"><line x1="1" y1="8" x2="15" y2="8"/><polyline points="8 1 15 8 8 15"/></svg></a> for yesterday's news.
                     </p>
