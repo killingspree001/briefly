@@ -194,3 +194,12 @@ foreach ($stories as $s) {
 }
 
 echo "\nDone! Client demo news is now in the database.\n";
+
+// Add a success log so "Updated Never" goes away
+$db->exec("INSERT INTO fetch_log (category, status, articles_found, run_at) VALUES ('all', 'success', 17, NOW())");
+
+// Finish with a nice HTML message since the user is visiting this via browser
+echo "<div style='font-family: sans-serif; padding: 40px; text-align: center;'>";
+echo "<h1 style='color: #10B981;'>Success! Demo News Seeded.</h1>";
+echo "<p>Go back to your <a href='/'>Homepage</a> to see the result.</p>";
+echo "</div>";

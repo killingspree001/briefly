@@ -260,7 +260,7 @@ code {
     color: var(--text-dim);
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 12px;
     font-variant-numeric: tabular-nums;
 }
 
@@ -510,8 +510,8 @@ code {
 }
 
 .empty-state__icon {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     background: var(--bg-surface);
     border-radius: 50%;
     display: flex;
@@ -519,7 +519,13 @@ code {
     justify-content: center;
     color: var(--accent);
     border: 2px solid var(--border);
-    margin-bottom: 8px;
+    margin: 0 auto 20px auto;
+}
+
+.empty-state__icon svg {
+    width: 48px;
+    height: 48px;
+    display: block;
 }
 
 .empty-state h2 {
@@ -848,9 +854,14 @@ code {
     }
 
     .filter-bar__meta {
+        justify-content: center;
+        width: 100%;
+        padding: 14px 0;
+        border-top: 1px solid var(--border);
+        margin-top: 10px;
         flex-wrap: wrap;
-        gap: 4px 6px;
-        font-size: 0.75rem;
+        gap: 10px 15px;
+        line-height: 1.6;
     }
 
     .pill {
@@ -1057,8 +1068,16 @@ code {
 
     .fetch-now-btn {
         width: 100%;
-        max-width: 280px;
-        padding: 14px 20px;
-        font-size: 1rem;
+        max-width: 340px;
+        padding: 16px 20px;
+        font-size: 1.05rem;
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+    }
+
+    .meta-separator {
+        display: none;
     }
 }
